@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ruang Belajar Ceria - Belajar Membaca & Menulis Anak TK</title>
+  
+  <!-- Tailwind CSS untuk Styling Responsif -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Fredoka & Quicksand (Font Bulat & Lucu untuk Anak) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Fredoka', 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #e0f2fe 0%, #fef08a 100%);
+      user-select: none; /* Mencegah anak tidak sengaja memblok teks */
+    }
+
+    /* Animasi Goyang Lucu */
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-3deg); }
+      50% { transform: rotate(3deg); }
+    }
+    .animate-wiggle {
+      animation: wiggle 3s ease-in-out infinite;
+    }
+
+    /* Animasi Balon Melayang */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    .animate-float {
+      animation: float 4s ease-in-out infinite;
+    }
+
+    /* Animasi Matahari Berputar Perlahan */
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .animate-spin-slow {
+      animation: spin-slow 20s linear infinite;
+    }
+
+    /* Gaya tulisan bayangan lembut */
+    .text-shadow-pop {
+      text-shadow: 3px 3px 0px #f472b6;
+    }
+    .text-shadow-green {
+      text-shadow: 3px 3px 0px #34d399;
+    }
+
+    /* Gaya animasi klik tombol */
+    .btn-bounce {
+      transition: transform 0.1s ease-in-out;
+    }
+    .btn-bounce:active {
+      transform: scale(0.9);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between overflow-x-hidden pb-6">
+
+  <!-- ================= DEKORASI LATAR BELAKANG INTERAKTIF ================= -->
+  <!-- Awan Kiri atas -->
+  <div class="absolute top-4 left-4 w-24 md:w-40 opacity-70 pointer-events-none animate-float" style="animation-delay: 0s;">
+    <svg viewBox="0 0 100 60" fill="#ffffff">
+      <path d="M20,40 C10,40 10,25 25,25 C25,10 45,5 55,20 C65,10 85,15 80,30 C90,30 95,40 80,50 C70,50 60,50 50,50 C30,50 20,50 20,40 Z" />
+    </svg>
+  </div>
+
+  <!-- Matahari Kanan atas -->
+  <div class="absolute top-4 right-4 w-16 md:w-28 opacity-80 pointer-events-none animate-spin-slow">
+    <svg viewBox="0 0 100 100" fill="#fbbf24">
+      <circle cx="50" cy="50" r="25" />
+      <g stroke="#fbbf24" stroke-width="6" stroke-linecap="round">
+        <line x1="50" y1="10" x2="50" y2="2" />
+        <line x1="50" y1="90" x2="50" y2="98" />
+        <line x1="10" y1="50" x2="2" y2="50" />
+        <line x1="90" y1="50" x2="98" y2="50" />
+        <line x1="21.7" y1="21.7" x2="16" y2="16" />
+        <line x1="78.3" y1="78.3" x2="84" y2="84" />
+        <line x1="21.7" y1="78.3" x2="16" y2="84" />
+        <line x1="78.3" y1="21.7" x2="84" y2="16" />
+      </g>
+    </svg>
+  </div>
+
+  <!-- ================= HEADER & NAVIGASI UTAMA ================= -->
+  <header class="relative z-10 w-full max-w-6xl mx-auto px-4 pt-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4 bg-white/80 backdrop-blur-md rounded-3xl p-4 shadow-xl border-4 border-pink-200">
+      
+      <!-- Logo Website -->
+      <button onclick="bukaHalaman('beranda')" class="flex items-center gap-3 focus:outline-none btn-bounce">
+        <span class="text-4xl md:text-5xl animate-wiggle inline-block">🎒</span>
+        <div class="text-left">
+          <h1 class="text-2xl md:text-3xl font-extrabold text-pink-500 tracking-wider text-shadow-green" style="text-shadow: 2px 2px 0px #fbbf24;">
+            Belajar Ceria
+          </h1>
+          <span class="text-xs md:text-sm font-bold text-sky-500 block -mt-1">Ruang Belajar Anak TK</span>
+        </div>
+      </button>
+
+      <!-- Menu Navigasi Berbentuk Balon Lucu -->
+      <nav class="flex flex-wrap justify-center gap-2 md:gap-3">
+        <button onclick="bukaHalaman('beranda')" id="nav-beranda" class="px-4 py-2 rounded-2xl text-md font-bold text-white bg-pink-400 hover:bg-pink-500 shadow-md border-b-4 border-pink-600 transition-all btn-bounce">
+          🏠 Beranda
+        </button>
+        <button onclick="bukaHalaman('huruf')" id="nav-huruf" class="px-4 py-2 rounded-2xl text-md font-bold text-white bg-sky-400 hover:bg-sky-500 shadow-md border-b-4 border-sky-600 transition-all btn-bounce">
+          🅰️ Huruf
+        </button>
+        <button onclick="bukaHalaman('menulis')" id="nav-menulis" class="px-4 py-2 rounded-2xl text-md font-bold text-white bg-yellow-400 hover:bg-yellow-500 shadow-md border-b-4 border-yellow-600 transition-all btn-bounce">
+          ✏️ Menulis
+        </button>
+        <button onclick="bukaHalaman('membaca')" id="nav-membaca" class="px-4 py-2 rounded-2xl text-md font-bold text-white bg-emerald-400 hover:bg-emerald-500 shadow-md border-b-4 border-emerald-600 transition-all btn-bounce">
+          📖 Membaca
+        </button>
+        <button onclick="bukaHalaman('kuis')" id="nav-kuis" class="px-4 py-2 rounded-2xl text-md font-bold text-white bg-purple-400 hover:bg-purple-500 shadow-md border-b-4 border-purple-600 transition-all btn-bounce">
+          🧩 Kuis
+        </button>
+        <button onclick="bukaHalaman('tentang')" id="nav-tentang" class="px-4 py-2 rounded-2xl text-md font-bold text-white bg-orange-400 hover:bg-orange-500 shadow-md border-b-4 border-orange-600 transition-all btn-bounce">
+          🧸 Tentang
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= KONTEN UTAMA ================= -->
+  <main class="relative z-10 w-full max-w-5xl mx-auto px-4 py-8 flex-grow flex items-center justify-center">
+    
+    <!-- 1. HALAMAN BERANDA -->
+    <section id="hal-beranda" class="w-full text-center py-6 flex flex-col items-center">
+      <div class="max-w-2xl bg-white/60 backdrop-blur-sm p-8 rounded-4xl border-4 border-dashed border-sky-300 shadow-2xl relative">
+        
+        <!-- Pelangi Lucu di atas -->
+        <span class="text-7xl block mb-4 animate-float">🌈</span>
+        
+        <h2 class="text-4xl md:text-6xl font-extrabold text-sky-500 tracking-wide text-shadow-pop mb-4">
+          Ruang Belajar Ceria
+        </h2>
+        
+        <p class="text-lg md:text-2xl font-bold text-slate-700 mb-8 max-w-lg mx-auto leading-relaxed">
+          Halo Teman-Teman! Mari belajar membaca dan menulis dengan cara yang sangat seru dan gembira! 🎉
+        </p>
+
+        <!-- Ilustrasi Anak Belajar -->
+        <div class="my-6 relative flex justify-center">
+          <div class="text-8xl animate-wiggle cursor-pointer inline-block" onclick="suarakan('Halo teman-teman! Mari kita belajar bersama-sama!')">
+            🧑‍🎨
+          </div>
+          <div class="text-4xl absolute -top-4 left-1/4 animate-bounce">🎈</div>
+          <div class="text-4xl absolute -top-4 right-1/4 animate-bounce" style="animation-delay: 1s;">⭐️</div>
+        </div>
+
+        <button onclick="bukaHalaman('huruf')" class="px-10 py-5 bg-pink-500 hover:bg-pink-600 text-white font-extrabold text-2xl rounded-full shadow-2xl border-b-8 border-pink-700 hover:border-b-4 transform hover:scale-105 active:scale-95 transition-all inline-flex items-center gap-3 btn-bounce">
+          🚀 Mulai Belajar!
+        </button>
+      </div>
+    </section>
+
+    <!-- 2. HALAMAN BELAJAR HURUF -->
+    <section id="hal-huruf" class="w-full hidden">
+      <div class="bg-white/80 rounded-3xl p-6 md:p-8 shadow-2xl border-4 border-sky-300">
+        <div class="text-center mb-6">
+          <h2 class="text-3xl md:text-4xl font-extrabold text-sky-500">🅰️ Mari Belajar Huruf</h2>
+          <p class="text-md md:text-lg text-slate-600 font-bold">Tekan salah satu huruf di bawah untuk mendengarkan suaranya!</p>
+        </div>
+
+        <!-- Layout Grid Huruf A-Z -->
+        <div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3 mb-8" id="grid-huruf">
+          <!-- Tombol huruf akan dimasukkan oleh Javascript -->
+        </div>
+
+        <!-- Kartu Detail Huruf yang Dipilih -->
+        <div class="bg-pink-50 rounded-2xl p-6 border-4 border-pink-200 shadow-inner flex flex-col md:flex-row items-center justify-around gap-6 hidden" id="kartu-huruf-detail">
+          <div class="text-center">
+            <span class="text-xs font-bold text-pink-400 block uppercase">Huruf Utama</span>
+            <div id="detail-huruf-besar-kecil" class="text-7xl md:text-8xl font-extrabold text-pink-500 tracking-wider">A a</div>
+          </div>
+          
+          <div class="text-center flex flex-col items-center">
+            <span class="text-xs font-bold text-sky-400 block uppercase mb-1">Contoh Kata</span>
+            <div id="detail-huruf-emoji" class="text-8xl animate-wiggle mb-2">🍎</div>
+            <div id="detail-huruf-kata" class="text-3xl md:text-4xl font-extrabold text-sky-600 tracking-wide">Apel</div>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <button onclick="suaraHurufAktif()" class="px-6 py-3 bg-pink-400 hover:bg-pink-500 text-white font-bold rounded-xl shadow-md border-b-4 border-pink-600 btn-bounce flex items-center justify-center gap-2">
+              🔊 Bunyi Huruf
+            </button>
+            <button onclick="suaraKataAktif()" class="px-6 py-3 bg-sky-400 hover:bg-sky-500 text-white font-bold rounded-xl shadow-md border-b-4 border-sky-600 btn-bounce flex items-center justify-center gap-2">
+              🔊 Bunyi Kata
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. HALAMAN BELAJAR MENULIS -->
+    <section id="hal-menulis" class="w-full hidden">
+      <div class="bg-white/80 rounded-3xl p-6 md:p-8 shadow-2xl border-4 border-yellow-300">
+        <div class="text-center mb-6">
+          <h2 class="text-3xl md:text-4xl font-extrabold text-yellow-500">✏️ Belajar Menulis</h2>
+          <p class="text-md md:text-lg text-slate-600 font-bold">Lihat garis putus-putus dan mari kita ikuti bentuk hurufnya!</p>
+        </div>
+
+        <!-- Pemilih Huruf Menulis -->
+        <div class="flex flex-wrap justify-center gap-2 mb-6">
+          <!-- Pilihan huruf menulis A-Z akan dibuat oleh Javascript -->
+          <div id="list-huruf-menulis" class="flex gap-2 overflow-x-auto pb-2 max-w-full"></div>
+        </div>
+
+        <!-- Ruang Panduan Menulis -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Kartu Huruf Besar -->
+          <div class="bg-yellow-50 rounded-2xl p-6 border-4 border-yellow-200 text-center flex flex-col items-center justify-center shadow-md">
+            <span class="text-md font-bold text-yellow-600 mb-2">Huruf Besar (Kapital)</span>
+            <div class="relative w-48 h-48 flex items-center justify-center bg-white rounded-xl border-4 border-dashed border-slate-300">
+              <!-- Grid pembantu membaca/menulis -->
+              <div class="absolute inset-0 grid grid-cols-2 grid-rows-2">
+                <div class="border-r border-b border-dashed border-slate-200"></div>
+                <div class="border-b border-dashed border-slate-200"></div>
+                <div class="border-r border-dashed border-slate-200"></div>
+                <div></div>
+              </div>
+              <span id="menulis-besar" class="relative text-9xl font-light text-slate-300 tracking-normal select-none font-sans" style="font-family: 'Quicksand'; font-weight: 300; letter-spacing: -5px;">A</span>
+              <span id="menulis-besar-overlay" class="absolute text-9xl font-bold text-yellow-500 select-none opacity-30 font-sans" style="font-family: 'Quicksand';">A</span>
+            </div>
+            <p class="text-xs font-bold text-slate-500 mt-4">Pegang pensilmu ✏️ lalu ikuti garis abu-abu!</p>
+          </div>
+
+          <!-- Kartu Huruf Kecil -->
+          <div class="bg-emerald-50 rounded-2xl p-6 border-4 border-emerald-200 text-center flex flex-col items-center justify-center shadow-md">
+            <span class="text-md font-bold text-emerald-600 mb-2">Huruf Kecil</span>
+            <div class="relative w-48 h-48 flex items-center justify-center bg-white rounded-xl border-4 border-dashed border-slate-300">
+              <!-- Grid pembantu membaca/menulis -->
+              <div class="absolute inset-0 grid grid-cols-2 grid-rows-2">
+                <div class="border-r border-b border-dashed border-slate-200"></div>
+                <div class="border-b border-dashed border-slate-200"></div>
+                <div class="border-r border-dashed border-slate-200"></div>
+                <div></div>
+              </div>
+              <span id="menulis-kecil" class="relative text-9xl font-light text-slate-300 tracking-normal select-none font-sans" style="font-family: 'Quicksand'; font-weight: 300; letter-spacing: -5px;">a</span>
+              <span id="menulis-kecil-overlay" class="absolute text-9xl font-bold text-emerald-500 select-none opacity-30 font-sans" style="font-family: 'Quicksand';">a</span>
+            </div>
+            <p class="text-xs font-bold text-slate-500 mt-4">Coba tirukan bentuk melengkungnya di kertas belajarmu!</p>
+          </div>
+        </div>
+
+        <div class="text-center mt-6">
+          <button id="btn-suara-tulis" onclick="suaraMenulisAktif()" class="px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-white font-bold rounded-xl shadow-md border-b-4 border-yellow-600 btn-bounce flex items-center gap-2 mx-auto">
+            🔊 Bunyi Huruf Ini
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. HALAMAN BELAJAR MEMBACA -->
+    <section id="hal-membaca" class="w-full hidden">
+      <div class="bg-white/80 rounded-3xl p-6 md:p-8 shadow-2xl border-4 border-emerald-300">
+        <div class="text-center mb-6">
+          <h2 class="text-3xl md:text-4xl font-extrabold text-emerald-500">📖 Belajar Membaca Kata</h2>
+          <p class="text-md md:text-lg text-slate-600 font-bold">Ayo eja suku kata bersama-sama!</p>
+        </div>
+
+        <!-- Carousel/Daftar Kata Membaca -->
+        <div class="flex flex-col items-center">
+          
+          <!-- Box Kata Aktif -->
+          <div class="bg-white rounded-3xl p-8 border-4 border-emerald-200 shadow-lg text-center max-w-md w-full flex flex-col items-center gap-6 mb-6">
+            
+            <div id="membaca-emoji" class="text-9xl animate-wiggle cursor-pointer" onclick="suaraKataMembacaAktif()">🍎</div>
+            
+            <!-- Kata Besar -->
+            <div id="membaca-kata" class="text-5xl font-extrabold text-emerald-600 tracking-widest uppercase">APEL</div>
+            
+            <!-- Suku Kata Dipisah -->
+            <div id="membaca-suku-kata" class="flex justify-center gap-2 text-2xl font-bold text-slate-500">
+              <span class="px-3 py-1 bg-yellow-100 rounded-lg text-yellow-700">A</span>
+              <span>-</span>
+              <span class="px-3 py-1 bg-pink-100 rounded-lg text-pink-700">PEL</span>
+            </div>
+
+            <!-- Tombol Suara Eja -->
+            <div class="flex gap-2">
+              <button onclick="suaraEjaMembacaAktif()" class="px-5 py-2.5 bg-yellow-400 hover:bg-yellow-500 text-slate-800 font-bold rounded-xl shadow-md border-b-4 border-yellow-600 text-sm flex items-center gap-1 btn-bounce">
+                🔊 Eja Suku Kata
+              </button>
+              <button onclick="suaraKataMembacaAktif()" class="px-5 py-2.5 bg-emerald-400 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-md border-b-4 border-emerald-600 text-sm flex items-center gap-1 btn-bounce">
+                🔊 Baca Kata
+              </button>
+            </div>
+          </div>
+
+          <!-- Navigasi Kata -->
+          <div class="flex items-center gap-6">
+            <button onclick="kataSebelumnya()" class="w-14 h-14 bg-pink-400 hover:bg-pink-500 text-white font-extrabold text-2xl rounded-full shadow-lg border-b-4 border-pink-600 flex items-center justify-center btn-bounce">
+              ⬅️
+            </button>
+            <span id="membaca-index" class="text-lg font-bold text-slate-700">1 / 6</span>
+            <button onclick="kataBerikutnya()" class="w-14 h-14 bg-emerald-400 hover:bg-emerald-500 text-white font-extrabold text-2xl rounded-full shadow-lg border-b-4 border-emerald-600 flex items-center justify-center btn-bounce">
+              ➡️
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. HALAMAN KUIS SEDERHANA -->
+    <section id="hal-kuis" class="w-full hidden">
+      <div class="bg-white/80 rounded-3xl p-6 md:p-8 shadow-2xl border-4 border-purple-300">
+        <div class="text-center mb-6">
+          <h2 class="text-3xl md:text-4xl font-extrabold text-purple-500">🧩 Kuis Seru</h2>
+          <p class="text-md md:text-lg text-slate-600 font-bold">Pilih gambar yang benar sesuai hurufnya, ya!</p>
+        </div>
+
+        <!-- Area Pertanyaan Kuis -->
+        <div id="area-kuis" class="flex flex-col items-center">
+          <!-- Skor / Progress -->
+          <div class="flex justify-between w-full max-w-md mb-4 font-bold text-slate-700 px-2">
+            <span id="kuis-soal-no">Soal 1 / 5</span>
+            <span id="kuis-skor" class="text-purple-600">Skor: 0 ⭐</span>
+          </div>
+
+          <div class="bg-purple-50 rounded-2xl p-8 border-4 border-purple-200 shadow-md text-center max-w-md w-full mb-6 flex flex-col items-center">
+            <p class="text-lg font-bold text-slate-600 mb-2">Yang mana gambar yang diawali huruf...</p>
+            <div id="kuis-huruf-tanya" class="text-8xl font-extrabold text-purple-600 text-shadow-pop mb-4">A</div>
+            <button onclick="suaraPertanyaanKuis()" class="px-4 py-2 bg-purple-400 hover:bg-purple-500 text-white font-bold rounded-lg text-xs flex items-center gap-1 btn-bounce shadow">
+              🔊 Bunyi Huruf
+            </button>
+          </div>
+
+          <!-- Pilihan Jawaban Gambar -->
+          <div class="grid grid-cols-3 gap-4 w-full max-w-md mb-6" id="kuis-opsi-jawaban">
+            <!-- Pilihan jawaban akan dimuat dinamis oleh Javascript -->
+          </div>
+
+          <!-- Pesan Umpan Balik (Benar/Salah) -->
+          <div id="kuis-feedback" class="text-2xl font-extrabold mb-4 h-8 text-center"></div>
+        </div>
+
+        <!-- Tampilan Kuis Selesai -->
+        <div id="area-selesai-kuis" class="hidden flex flex-col items-center text-center py-8">
+          <span class="text-8xl mb-4 animate-bounce">🏆</span>
+          <h3 class="text-3xl font-extrabold text-purple-600 mb-2">Hebat Sekali!</h3>
+          <p class="text-xl font-bold text-slate-700 mb-6" id="skor-akhir-teks">Kamu mendapat 5 dari 5 bintang!</p>
+          
+          <button onclick="mulaiUlangKuis()" class="px-8 py-4 bg-purple-500 hover:bg-purple-600 text-white font-extrabold text-xl rounded-2xl shadow-lg border-b-4 border-purple-700 btn-bounce">
+            🔄 Main Lagi
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. HALAMAN TENTANG -->
+    <section id="hal-tentang" class="w-full hidden">
+      <div class="bg-white/80 rounded-3xl p-6 md:p-8 shadow-2xl border-4 border-orange-300 max-w-3xl mx-auto">
+        <div class="text-center mb-6">
+          <h2 class="text-3xl md:text-4xl font-extrabold text-orange-500">🧸 Tentang Ruang Belajar Ceria</h2>
+          <p class="text-md md:text-lg text-slate-600 font-bold">Informasi Mengenai Website Ini</p>
+        </div>
+
+        <div class="space-y-6 text-slate-700 leading-relaxed font-semibold">
+          <div class="bg-orange-50 p-6 rounded-2xl border-2 border-orange-100 flex flex-col md:flex-row items-center gap-6">
+            <span class="text-7xl">🏡</span>
+            <div>
+              <h3 class="text-xl font-bold text-orange-600 mb-2">Tujuan Kami</h3>
+              <p class="text-sm md:text-md text-slate-600 font-medium">
+                Ruang Belajar Ceria adalah platform edukasi interaktif sederhana yang dirancang khusus untuk anak-anak Taman Kanak-Kanak (TK) usia 4–6 tahun. Website ini berfokus pada pengenalan huruf, stimulasi bentuk tulisan tangan, pengejaan suku kata dasar, dan evaluasi sederhana lewat kuis bergambar yang ramah dan interaktif.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-pink-50 p-4 rounded-xl border border-pink-100">
+              <h4 class="font-bold text-pink-600 mb-1">🎨 Desain Ramah Anak</h4>
+              <p class="text-xs text-slate-600 font-medium">Penggunaan warna pastel yang lembut di mata anak-anak, ikon emoji yang lucu, serta tata letak tombol berukuran besar untuk memudahkan ketukan jari pada layar gawai/tablet.</p>
+            </div>
+            <div class="bg-sky-50 p-4 rounded-xl border border-sky-100">
+              <h4 class="font-bold text-sky-600 mb-1">🔊 Suara Interaktif</h4>
+              <p class="text-xs text-slate-600 font-medium">Dilengkapi fitur suara teks otomatis (Web Speech API) dalam Bahasa Indonesia untuk melatih pendengaran anak tentang pengucapan huruf dan kata.</p>
+            </div>
+          </div>
+
+          <div class="text-center pt-4">
+            <p class="text-xs text-slate-400">Dibuat dengan cinta untuk generasi pintar masa depan. ❤️</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER / MENU KECIL ================= -->
+  <footer class="relative z-10 w-full text-center mt-auto">
+    <div class="bg-white/40 backdrop-blur-sm py-2 px-4 rounded-full max-w-xs mx-auto text-xs font-bold text-slate-600 shadow-sm">
+      ✨ Mari Belajar dengan Ceria! ✨
+    </div>
+  </footer>
+
+  <!-- ================= AUDIO & KODE GAME UTAMA (JAVASCRIPT) ================= -->
+  <script>
+    // DATA BELAJAR HURUF (A-Z)
+    const DATA_HURUF = [
+      { huruf: 'A', kata: 'Apel', emoji: '🍎', ejaan: 'A-pel' },
+      { huruf: 'B', kata: 'Bola', emoji: '⚽', ejaan: 'Bo-la' },
+      { huruf: 'C', kata: 'Ceri', emoji: '🍒', ejaan: 'Ce-ri' },
+      { huruf: 'D', kata: 'Domba', emoji: '🐑', ejaan: 'Dom-ba' },
+      { huruf: 'E', kata: 'Ember', emoji: '🪣', ejaan: 'Em-ber' },
+      { huruf: 'F', kata: 'Foto', emoji: '🖼️', ejaan: 'Fo-to' },
+      { huruf: 'G', kata: 'Gajah', emoji: '🐘', ejaan: 'Ga-jah' },
+      { huruf: 'H', kata: 'Harimau', emoji: '🐯', ejaan: 'Ha-ri-mau' },
+      { huruf: 'I', kata: 'Ikan', emoji: '🐟', ejaan: 'I-kan' },
+      { huruf: 'J', kata: 'Jeruk', emoji: '🍊', ejaan: 'Je-ruk' },
+      { huruf: 'K', kata: 'Kucing', emoji: '🐱', ejaan: 'Ku-cing' },
+      { huruf: 'L', kata: 'Lemon', emoji: '🍋', ejaan: 'Le-mon' },
+      { huruf: 'M', kata: 'Matahari', emoji: '☀️', ejaan: 'Ma-ta-ha-ri' },
+      { huruf: 'N', kata: 'Nanas', emoji: '🍍', ejaan: 'Na-nas' },
+      { huruf: 'O', kata: 'Obor', emoji: '🔦', ejaan: 'O-bor' },
+      { huruf: 'P', kata: 'Pisang', emoji: '🍌', ejaan: 'Pi-sang' },
+      { huruf: 'Q', kata: 'Quran', emoji: '📖', ejaan: 'Qu-ran' },
+      { huruf: 'R', kata: 'Roti', emoji: '🍞', ejaan: 'Ro-ti' },
+      { huruf: 'S', kata: 'Susu', emoji: '🥛', ejaan: 'Su-su' },
+      { huruf: 'T', kata: 'Topi', emoji: '👒', ejaan: 'To-pi' },
+      { huruf: 'U', kata: 'Uang', emoji: '💵', ejaan: 'U-ang' },
+      { huruf: 'V', kata: 'Vas bunga', emoji: '🏺', ejaan: 'Vas bu-nga' },
+      { huruf: 'W', kata: 'Wortel', emoji: '🥕', ejaan: 'Wor-tel' },
+      { huruf: 'X', kata: 'Xilofon', emoji: '🎹', ejaan: 'Xi-lo-fon' },
+      { huruf: 'Y', kata: 'Yoyo', emoji: '🪀', ejaan: 'Yo-yo' },
+      { huruf: 'Z', kata: 'Zebra', emoji: '🦓', ejaan: 'Ze-bra' }
+    ];
+
+    // DATA MEMBACA KATA SEDERHANA
+    const DATA_MEMBACA = [
+      { kata: 'IBU', suku: ['I', 'BU'], emoji: '👩', ejaan: 'I-Bu' },
+      { kata: 'AYAH', suku: ['A', 'YAH'], emoji: '👨', ejaan: 'A-Yah' },
+      { kata: 'BUKU', suku: ['BU', 'KU'], emoji: '📚', ejaan: 'Bu-Ku' },
+      { kata: 'KUCING', suku: ['KU', 'CING'], emoji: '🐱', ejaan: 'Ku-Cing' },
+      { kata: 'BOLA', suku: ['BO', 'LA'], emoji: '⚽', ejaan: 'Bo-La' },
+      { kata: 'SUSU', suku: ['SU', 'SU'], emoji: '🥛', ejaan: 'Su-Su' }
+    ];
+
+    // STATE PERMAINAN / BELAJAR
+    let hurufTerpilih = DATA_HURUF[0];
+    let indeksMembaca = 0;
+    let hurufMenulisTerpilih = 'A';
+    
+    // STATE KUIS
+    let kuisSkor = 0;
+    let kuisIndeksSoal = 0;
+    const TOTAL_SOAL_KUIS = 5;
+    let soalKuisList = [];
+
+    // FUNGSI NAVIGASI HALAMAN (SINGLE PAGE APP)
+    function bukaHalaman(idHalaman) {
+      // Sembunyikan semua halaman
+      const halaman = ['beranda', 'huruf', 'menulis', 'membaca', 'kuis', 'tentang'];
+      halaman.forEach(hal => {
+        document.getElementById(`hal-${hal}`).classList.add('hidden');
+        
+        // Hapus kelas navigasi aktif
+        const navBtn = document.getElementById(`nav-${hal}`);
+        if (navBtn) {
+          navBtn.classList.remove('scale-110', 'rotate-2', 'ring-4', 'ring-white/80');
+        }
+      });
+
+      // Tampilkan halaman aktif
+      const halAktif = document.getElementById(`hal-${idHalaman}`);
+      if (halAktif) {
+        halAktif.classList.remove('hidden');
+      }
+
+      // Tandai tombol navigasi aktif
+      const navBtnAktif = document.getElementById(`nav-${idHalaman}`);
+      if (navBtnAktif) {
+        navBtnAktif.classList.add('scale-110', 'rotate-2', 'ring-4', 'ring-white/80');
+      }
+
+      // Suara Sapaan Halaman
+      if (idHalaman === 'beranda') {
+        suarakan("Mari belajar bersama!");
+      } else if (idHalaman === 'huruf') {
+        suarakan("Halaman Huruf!");
+        muatDetailHuruf(hurufTerpilih.huruf);
+      } else if (idHalaman === 'menulis') {
+        suarakan("Halaman Menulis!");
+        pilihHurufMenulis(hurufMenulisTerpilih);
+      } else if (idHalaman === 'membaca') {
+        suarakan("Halaman Membaca!");
+        updateMembacaWord();
+      } else if (idHalaman === 'kuis') {
+        suarakan("Halaman Kuis!");
+        mulaiUlangKuis();
+      } else if (idHalaman === 'tentang') {
+        suarakan("Halaman Tentang!");
+      }
+    }
+
+    // FUNGSI SUARA MENGGUNAKAN SPEECH SYNTHESIS BROWSER (RAMAH ANAK)
+    function suarakan(teks) {
+      if ('speechSynthesis' in window) {
+        // Berhentikan suara yang sedang berjalan agar tidak tumpang tindih
+        window.speechSynthesis.cancel();
+        
+        const utterance = new SpeechSynthesisUtterance(teks);
+        utterance.lang = 'id-ID'; // Bahasa Indonesia
+        utterance.pitch = 1.3;     // Pitch tinggi agar terdengar imut/ceria ramah anak
+        utterance.rate = 0.85;     // Kecepatan agak pelan agar anak mengerti ejaan
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    // ================= FITUR BELAJAR HURUF =================
+    function inisialisasiBelajarHuruf() {
+      const grid = document.getElementById('grid-huruf');
+      grid.innerHTML = '';
+
+      DATA_HURUF.forEach(item => {
+        const btn = document.createElement('button');
+        btn.id = `btn-huruf-${item.huruf}`;
+        btn.className = `btn-bounce w-14 h-14 md:w-16 md:h-16 rounded-2xl font-extrabold text-2xl md:text-3xl flex items-center justify-center border-b-4 transition-all shadow bg-white hover:bg-sky-100 text-sky-500 border-sky-300`;
+        btn.innerText = item.huruf;
+        btn.onclick = () => {
+          muatDetailHuruf(item.huruf);
+        };
+        grid.appendChild(btn);
+      });
+    }
+
+    function muatDetailHuruf(huruf) {
+      // Hapus kelas aktif di huruf sebelumnya
+      if (hurufTerpilih) {
+        const tombolLama = document.getElementById(`btn-huruf-${hurufTerpilih.huruf}`);
+        if (tombolLama) {
+          tombolLama.className = "btn-bounce w-14 h-14 md:w-16 md:h-16 rounded-2xl font-extrabold text-2xl md:text-3xl flex items-center justify-center border-b-4 transition-all shadow bg-white hover:bg-sky-100 text-sky-500 border-sky-300";
+        }
+      }
+
+      // Cari data huruf yang baru
+      hurufTerpilih = DATA_HURUF.find(h => h.huruf === huruf);
+      
+      // Beri kelas aktif pada tombol yang dipilih
+      const tombolBaru = document.getElementById(`btn-huruf-${huruf}`);
+      if (tombolBaru) {
+        tombolBaru.className = "btn-bounce w-14 h-14 md:w-16 md:h-16 rounded-2xl font-extrabold text-2xl md:text-3xl flex items-center justify-center border-b-4 transition-all shadow bg-pink-500 text-white border-pink-700 scale-110";
+      }
+
+      // Ubah tampilan detail
+      document.getElementById('kartu-huruf-detail').classList.remove('hidden');
+      document.getElementById('detail-huruf-besar-kecil').innerText = `${hurufTerpilih.huruf} ${hurufTerpilih.huruf.toLowerCase()}`;
+      document.getElementById('detail-huruf-emoji').innerText = hurufTerpilih.emoji;
+      document.getElementById('detail-huruf-kata').innerText = hurufTerpilih.kata;
+
+      // Bunyikan otomatis saat diklik
+      suaraHurufAktif();
+    }
+
+    function suaraHurufAktif() {
+      if (hurufTerpilih) {
+        suarakan(`Huruf ${hurufTerpilih.huruf}`);
+      }
+    }
+
+    function suaraKataAktif() {
+      if (hurufTerpilih) {
+        suarakan(`${hurufTerpilih.huruf} untuk ${hurufTerpilih.kata}`);
+      }
+    }
+
+
+    // ================= FITUR BELAJAR MENULIS =================
+    function inisialisasiBelajarMenulis() {
+      const container = document.getElementById('list-huruf-menulis');
+      container.innerHTML = '';
+
+      DATA_HURUF.forEach(item => {
+        const btn = document.createElement('button');
+        btn.id = `btn-tulis-${item.huruf}`;
+        btn.className = `btn-bounce px-4 py-2 bg-white text-yellow-600 font-extrabold text-xl rounded-xl border-2 border-yellow-200 flex-shrink-0 transition-all`;
+        btn.innerText = `${item.huruf}${item.huruf.toLowerCase()}`;
+        btn.onclick = () => {
+          pilihHurufMenulis(item.huruf);
+        };
+        container.appendChild(btn);
+      });
+    }
+
+    function pilihHurufMenulis(huruf) {
+      // Hapus tanda aktif lama
+      if (hurufMenulisTerpilih) {
+        const btnLama = document.getElementById(`btn-tulis-${hurufMenulisTerpilih}`);
+        if (btnLama) {
+          btnLama.className = `btn-bounce px-4 py-2 bg-white text-yellow-600 font-extrabold text-xl rounded-xl border-2 border-yellow-200 flex-shrink-0 transition-all`;
+        }
+      }
+
+      hurufMenulisTerpilih = huruf;
+      
+      // Tambah tanda aktif baru
+      const btnBaru = document.getElementById(`btn-tulis-${huruf}`);
+      if (btnBaru) {
+        btnBaru.className = `btn-bounce px-4 py-2 bg-yellow-400 text-white font-extrabold text-xl rounded-xl border-2 border-yellow-500 flex-shrink-0 scale-105 transition-all shadow-md`;
+        // Scroll otomatis elemen agar terlihat di layar kecil
+        btnBaru.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+
+      // Ubah visual cetakan menulis
+      document.getElementById('menulis-besar').innerText = huruf;
+      document.getElementById('menulis-besar-overlay').innerText = huruf;
+      document.getElementById('menulis-kecil').innerText = huruf.toLowerCase();
+      document.getElementById('menulis-kecil-overlay').innerText = huruf.toLowerCase();
+
+      // Atur suara pengucapan
+      suarakan(`Mari tirukan bentuk huruf ${huruf}`);
+    }
+
+    function suaraMenulisAktif() {
+      suarakan(`Huruf ${hurufMenulisTerpilih}`);
+    }
+
+
+    // ================= FITUR BELAJAR MEMBACA =================
+    function updateMembacaWord() {
+      const item = DATA_MEMBACA[indeksMembaca];
+      
+      document.getElementById('membaca-emoji').innerText = item.emoji;
+      document.getElementById('membaca-kata').innerText = item.kata;
+      document.getElementById('membaca-index').innerText = `${indeksMembaca + 1} / ${DATA_MEMBACA.length}`;
+
+      // Tampilkan ejaan yang dipisahkan
+      const containerSuku = document.getElementById('membaca-suku-kata');
+      containerSuku.innerHTML = '';
+      
+      item.suku.forEach((sk, i) => {
+        const span = document.createElement('span');
+        const warnaPilihan = i % 2 === 0 ? 'bg-yellow-100 text-yellow-700' : 'bg-pink-100 text-pink-700';
+        span.className = `px-3 py-1 ${warnaPilihan} rounded-lg font-extrabold text-xl`;
+        span.innerText = sk;
+        containerSuku.appendChild(span);
+
+        if (i < item.suku.length - 1) {
+          const pemisah = document.createElement('span');
+          pemisah.className = "text-slate-400 text-xl font-bold self-center";
+          pemisah.innerText = ' - ';
+          containerSuku.appendChild(pemisah);
+        }
+      });
+
+      // Suarakan langsung kata baru
+      suarakan(`Mari membaca! ${item.kata}`);
+    }
+
+    function kataBerikutnya() {
+      indeksMembaca = (indeksMembaca + 1) % DATA_MEMBACA.length;
+      updateMembacaWord();
+    }
+
+    function kataSebelumnya() {
+      indeksMembaca = (indeksMembaca - 1 + DATA_MEMBACA.length) % DATA_MEMBACA.length;
+      updateMembacaWord();
+    }
+
+    function suaraKataMembacaAktif() {
+      const item = DATA_MEMBACA[indeksMembaca];
+      suarakan(item.kata);
+    }
+
+    function suaraEjaMembacaAktif() {
+      const item = DATA_MEMBACA[indeksMembaca];
+      suarakan(item.ejaan);
+    }
+
+
+    // ================= FITUR KUIS SEDERHANA =================
+    function mulaiUlangKuis() {
+      kuisSkor = 0;
+      kuisIndeksSoal = 0;
+      
+      document.getElementById('area-kuis').classList.remove('hidden');
+      document.getElementById('area-selesai-kuis').classList.add('hidden');
+      document.getElementById('kuis-feedback').innerText = '';
+
+      buatDaftarSoalKuis();
+      tampilkanSoalKuis();
+    }
+
+    function buatDaftarSoalKuis() {
+      // Mengacak urutan data huruf lalu diambil 5 untuk jadi bahan kuis
+      const dataAcak = [...DATA_HURUF].sort(() => 0.5 - Math.random());
+      soalKuisList = dataAcak.slice(0, TOTAL_SOAL_KUIS);
+    }
+
+    function tampilkanSoalKuis() {
+      if (kuisIndeksSoal >= TOTAL_SOAL_KUIS) {
+        selesaiKuis();
+        return;
+      }
+
+      document.getElementById('kuis-feedback').innerText = '';
+      document.getElementById('kuis-soal-no').innerText = `Soal ${kuisIndeksSoal + 1} / ${TOTAL_SOAL_KUIS}`;
+      document.getElementById('kuis-skor').innerText = `Skor: ${kuisSkor} ⭐`;
+
+      const dataSoalAktif = soalKuisList[kuisIndeksSoal];
+      document.getElementById('kuis-huruf-tanya').innerText = dataSoalAktif.huruf;
+
+      // Buat pilihan jawaban (1 Benar, 2 Salah)
+      const opsiJawaban = [dataSoalAktif];
+      
+      // Ambil opsi salah
+      while (opsiJawaban.length < 3) {
+        const randomItem = DATA_HURUF[Math.floor(Math.random() * DATA_HURUF.length)];
+        if (!opsiJawaban.some(item => item.huruf === randomItem.huruf)) {
+          opsiJawaban.push(randomItem);
+        }
+      }
+
+      // Acak pilihan jawaban
+      opsiJawaban.sort(() => 0.5 - Math.random());
+
+      // Tampilkan ke UI
+      const containerOpsi = document.getElementById('kuis-opsi-jawaban');
+      containerOpsi.innerHTML = '';
+
+      opsiJawaban.forEach(opsi => {
+        const btn = document.createElement('button');
+        btn.className = `btn-bounce bg-white hover:bg-purple-100 p-4 rounded-2xl border-4 border-purple-200 hover:border-purple-300 shadow flex flex-col items-center justify-center transition-all h-32 md:h-36`;
+        btn.onclick = () => verifikasiJawabanKuis(opsi.huruf === dataSoalAktif.huruf, btn);
+        
+        // Isi tombol dengan Emoji besar dan teks di bawahnya
+        btn.innerHTML = `
+          <span class="text-5xl md:text-6xl mb-1">${opsi.emoji}</span>
+          <span class="text-sm font-bold text-slate-700 capitalize">${opsi.kata}</span>
+        `;
+        containerOpsi.appendChild(btn);
+      });
+
+      // Bacakan pertanyaan otomatis setelah dimuat
+      setTimeout(() => {
+        suaraPertanyaanKuis();
+      }, 500);
+    }
+
+    function suaraPertanyaanKuis() {
+      const dataSoalAktif = soalKuisList[kuisIndeksSoal];
+      suarakan(`Coba tebak, yang mana gambar yang diawali dengan huruf ${dataSoalAktif.huruf}?`);
+    }
+
+    function verifikasiJawabanKuis(apakahBenar, elemenTombol) {
+      const feedbackEl = document.getElementById('kuis-feedback');
+      
+      // Nonaktifkan semua pilihan agar anak tidak klik berkali-kali
+      const semuaTombol = document.querySelectorAll('#kuis-opsi-jawaban button');
+      semuaTombol.forEach(btn => btn.disabled = true);
+
+      if (apakahBenar) {
+        kuisSkor++;
+        elemenTombol.classList.remove('border-purple-200');
+        elemenTombol.classList.add('border-emerald-500', 'bg-emerald-50', 'scale-105');
+        feedbackEl.innerText = "🎉 Hebat! Jawabanmu Benar! 💖";
+        feedbackEl.className = "text-2xl font-extrabold text-emerald-500 animate-bounce h-8 text-center";
+        suarakan("Hebat! Jawabanmu betul!");
+      } else {
+        elemenTombol.classList.remove('border-purple-200');
+        elemenTombol.classList.add('border-pink-500', 'bg-pink-50');
+        feedbackEl.innerText = "😢 Wah, coba lagi ya sayang!";
+        feedbackEl.className = "text-2xl font-extrabold text-pink-500 h-8 text-center";
+        suarakan("Aduh, coba tebak lagi ya!");
+
+        // Beri highlight hijau pada jawaban yang benar agar anak belajar
+        const dataSoalAktif = soalKuisList[kuisIndeksSoal];
+        // Temukan mana tombol yang isinya jawaban benar
+        const tombolBenar = Array.from(semuaTombol).find(btn => btn.innerText.toLowerCase().includes(dataSoalAktif.kata.toLowerCase()));
+        if (tombolBenar) {
+          tombolBenar.classList.add('border-emerald-500', 'bg-emerald-50');
+        }
+      }
+
+      // Lanjut ke soal berikutnya setelah delay 2.5 detik
+      setTimeout(() => {
+        kuisIndeksSoal++;
+        tampilkanSoalKuis();
+      }, 2500);
+    }
+
+    function selesaiKuis() {
+      document.getElementById('area-kuis').classList.add('hidden');
+      document.getElementById('area-selesai-kuis').classList.remove('hidden');
+      
+      const skorTeks = document.getElementById('skor-akhir-teks');
+      skorTeks.innerText = `Kamu berhasil mengumpulkan ${kuisSkor} dari 5 bintang emas! 🌟`;
+
+      suarakan(`Luar biasa! Kamu menyelesaikan kuis dan mendapat ${kuisSkor} bintang!`);
+    }
+
+
+    // ================= INISIALISASI AWAL WEBSITE =================
+    window.onload = function() {
+      // Inisialisasi Konten Data
+      inisialisasiBelajarHuruf();
+      inisialisasiBelajarMenulis();
+
+      // Set default halaman awal (Beranda)
+      bukaHalaman('beranda');
+    };
+  </script>
+</body>
+</html>
